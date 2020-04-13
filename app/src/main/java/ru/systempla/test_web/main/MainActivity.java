@@ -95,6 +95,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void showMessage(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
