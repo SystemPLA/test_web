@@ -9,7 +9,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
+import ru.systempla.test_web.Constants;
 import ru.systempla.test_web.R;
+import timber.log.Timber;
 
 public class MainActivity extends MvpAppCompatActivity implements MainView {
 
@@ -21,17 +23,35 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     WebChromeClient webChromeClient;
     WebViewClient webViewClient;
+    TestWebViewClient testWebViewClient;
+    TrackWebViewClient trackWebViewClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        testWebViewClient = new TestWebViewClient(presenter);
+        trackWebViewClient = new TrackWebViewClient(presenter);
         ButterKnife.bind(this);
     }
 
     @Override
     public void loadUrl(String url) {
-        webView.loadUrl(url);
+//        Timber.e("В АКТИВИТИ");
+        if (url.equals(Constants.TEST_URL)) {
+//            Timber.e("ЗАГРУЗКА ТЕСТ");
+            webView.setWebViewClient(testWebViewClient);
+            webView.loadUrl(url);
+            return;
+        } else if (url.equals(Constants.TRACK_URL)) {
+            webView.setWebViewClient(trackWebViewClient);
+            webView.loadUrl(url);
+            return;
+        } else if (url.equals(Constants.GAME_URL)) {
+            webView.setWebViewClient(webViewClient);
+            webView.loadUrl(url);
+            return;
+        } else webView.loadUrl(url);
     }
 
     @Override
