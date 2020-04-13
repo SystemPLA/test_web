@@ -21,10 +21,16 @@ public class TrackWebViewClient extends WebViewClient {
         if (!presenter.isFlag()) {
             presenter.setFlag(true);
 //            Timber.e("В НУЖНОМ МЕСТЕ");
-            view.getContext().startActivity(
-                    new Intent(Intent.ACTION_VIEW, Uri.parse(request.getUrl().toString())));
-            return true;
+            presenter.saveUrl(request.getUrl().toString());
+            presenter.loadUrl(request.getUrl().toString());
+            return false;
         }
         return false;
+    }
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+        presenter.stopLoad();
     }
 }

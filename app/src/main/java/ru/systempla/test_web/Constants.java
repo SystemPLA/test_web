@@ -6,4 +6,5 @@ public class Constants {
     public static String TEST_URL = "http://ctraf.com/test";
     public static String TRACK_URL = "http://ctraf.com/track";
     public static String YANDEX_URL = "https://yandex.ru";
+    public static String NO_NETWORK = "Нет подключения к сети";
 }

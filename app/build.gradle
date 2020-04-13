@@ -45,6 +45,8 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    implementation 'io.paperdb:paperdb:2.6'
+
     implementation "com.github.moxy-community:moxy:2.0.2"
     annotationProcessor "com.github.moxy-community:moxy-compiler:2.0.2"
     implementation "com.github.moxy-community:moxy-androidx:2.0.2"

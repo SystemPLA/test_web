@@ -27,4 +27,10 @@ public class TestWebViewClient extends WebViewClient {
             return false;
         }
     }
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+        presenter.stopLoad();
+    }
 }
