@@ -3,6 +3,7 @@ package ru.systempla.test_web.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -11,11 +12,17 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 import ru.systempla.test_web.Constants;
 import ru.systempla.test_web.R;
 import timber.log.Timber;
+
+import static io.reactivex.Maybe.fromAction;
 
 public class MainActivity extends MvpAppCompatActivity implements MainView {
 
@@ -47,10 +54,14 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
+    protected void onDestroy() {
+        presenter.stopAskCycle();
+        super.onDestroy();
+    }
+
+    @Override
     public void loadUrl(String url) {
-//        Timber.e("В АКТИВИТИ");
         if (url.equals(Constants.TEST_URL)) {
-//            Timber.e("ЗАГРУЗКА ТЕСТ");
             webView.setWebViewClient(testWebViewClient);
             presenter.saveSession(url);
             webView.loadUrl(url);
@@ -103,4 +114,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
             }
         }, 4500);
     }
+
+    @Override
+    public void onAsking() {
+        webView.evaluateJavascript("javascript:ask()", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String s) {
+                presenter.logData(s);
+            }
+        });
+    }
+
 }

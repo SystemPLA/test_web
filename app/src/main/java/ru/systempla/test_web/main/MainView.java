@@ -10,6 +10,7 @@ public interface MainView extends MvpView {
 
     void init();
     void loadUrl(String url);
+    void onAsking();
 
     @StateStrategyType(value = OneExecutionStateStrategy.class)
     void showMessage(String message);
@@ -17,4 +18,5 @@ public interface MainView extends MvpView {
     void showLoading();
     @StateStrategyType(value = OneExecutionStateStrategy.class)
     void hideLoading();
+
 }

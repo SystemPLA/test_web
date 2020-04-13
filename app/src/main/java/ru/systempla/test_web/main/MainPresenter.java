@@ -1,9 +1,11 @@
 package ru.systempla.test_web.main;
 
 import java.time.chrono.IsoChronology;
+import java.util.Observable;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -18,8 +20,11 @@ import timber.log.Timber;
 public class MainPresenter extends MvpPresenter<MainView> {
 
     private boolean flag = false;
+    private boolean threadFlag = true;
     private String url;
+    private String jsData;
     private ISession session = App.getInstance().getSessionManager();
+    private Thread thread;
 
     @Override
     protected void onFirstViewAttach() {
@@ -47,7 +52,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
     }
 
     public void loadTest(){
-//        Timber.e("ПЕРВИЧНЫЙ ЗАПРОС");
         Completable.fromAction(() -> getViewState().loadUrl(Constants.TEST_URL)).subscribe();
     }
 
@@ -56,7 +60,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
     }
 
     public void loadTrack() {
-//        Timber.e("ПОЛУЧИЛ ПЕРЕНАПРАВЛЕНИЕ");
         Completable.fromAction(() -> getViewState().loadUrl(Constants.TRACK_URL)).subscribe();
     }
 
@@ -87,4 +90,30 @@ public class MainPresenter extends MvpPresenter<MainView> {
     public void stopLoad(){
         getViewState().hideLoading();
     }
+
+    public void startAskCycle() {
+//        threadFlag = true;
+//        thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (threadFlag) {
+//                    getViewState().onAsking();
+//                    try{
+//                        Thread.sleep(1000);
+//                    }catch(InterruptedException e){}
+//                }
+//            }
+//        });
+//        thread.start();
+    }
+
+    public void stopAskCycle() {
+//        threadFlag = false;
+    }
+
+    public void logData(String s) {
+        jsData = s;
+        Timber.e("Получен результат ask(): "+s);
+    }
+
 }
