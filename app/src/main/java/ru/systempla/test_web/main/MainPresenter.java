@@ -35,7 +35,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
     private void onAppStart(){
         getViewState().init();
         startLoad();
-        session.resetUrl();
+//        session.resetUrl();
         if (App.getInstance().getNetworkStatus().isOffline()) {
             getViewState().showMessage(Constants.NO_NETWORK);
             stopLoad();

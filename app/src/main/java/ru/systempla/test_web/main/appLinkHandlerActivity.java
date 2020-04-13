@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class appLinkHandlerActivity extends AppCompatActivity {
 
     String actCode="", pCode="", key="";
@@ -42,10 +44,12 @@ public class appLinkHandlerActivity extends AppCompatActivity {
         if (params.size()>=2)
             pCode=params.get(1);
 
-        if (params.size()>=3)
-            key=params.get(2);
 
+        Timber.e(actCode);
+        Timber.e(pCode);
 
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
         /* assume that user is clicked http://example.com/v/my-user-id actCode is "v", pCode is "my-user-id"  Do now whatever you need. */
     }
 }
